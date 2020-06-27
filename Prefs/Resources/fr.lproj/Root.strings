@@ -1,0 +1,30 @@
+{
+    FASTLPM = "FastLPM";
+    ENABLED = "Activé";
+    RESPRING_INFO = "Un respring peut être nécessaire pour le switch Activé seulement.";
+
+    GLOBAL_SETTINGS = "Paramètres globaux";
+    VIBRATIONS_ENABLED = "Vibrations";
+
+    VIBRATIONS_7_AND_NEWER = "Type de vibrations (iPhone 7 & plus récent)";
+    LIGHT = "Léger";
+    MEDIUM = "Moyen";
+    HEAVY = "Fort";
+    SOFT = "Doux";
+    RIGID = "Rigide";
+
+    VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
+    STRONG = "Puissant";
+
+    CONTRIBUTORS = "Contributeurs";
+    CONTRIBUTE_TO_TRANSLATIONS = "📖 Contribuez aux traductions !";
+
+    SUPPORT_TITLE = "Support";
+    BUY_ME_A_COFFEE = "☕️ Achetez moi un café";
+    FEATURE_REQUEST = "💡 Une idée de fonctionnalité ?";
+    MAIL = "Mail";
+    FOUND_A_BUG = "🐞 Vous avez trouvé un bug ?";
+    SOURCE_CODE = "💻 Code source";
+
+    FOOTER_TEXT = "FastLPM par RedenticDev";
+}

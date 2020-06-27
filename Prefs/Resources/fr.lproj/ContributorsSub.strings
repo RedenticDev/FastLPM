@@ -1,0 +1,6 @@
+{
+    FASTLPM = "FastLPM";
+
+    TESTERS = "Testeurs";
+    TRANSLATORS = "Traducteurs";
+}
