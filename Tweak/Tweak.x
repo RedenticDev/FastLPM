@@ -2,6 +2,9 @@
 #import <AudioToolbox/AudioServices.h>
 #import <Cephei/HBPreferences.h>
 
+// Check for Haptic/Taptic support
+#define IS_HAPTIC_TAPTIC_DEVICE ([[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2)
+
 @interface _UIBatteryView : UIView
 @end
 
@@ -14,6 +17,7 @@
 HBPreferences* prefs;
 BOOL shouldBeInitialized = NO;
 BOOL shouldBeRemoved = NO;
+BOOL isHapticTapticDevice;
 BOOL enabled = YES;
 BOOL vibrationEnabled = YES;
 UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
@@ -29,7 +33,7 @@ UIGestureRecognizer* gestureRecognizer;
     -(id)initWithFrame:(CGRect)arg1 {
         id _view = %orig;
         if (_view && enabled && !shouldBeRemoved) {
-            shouldBeInitialized = YES; // Because unable to check superview IN init
+            shouldBeInitialized = YES;
         }
         return _view;
     }
@@ -42,10 +46,6 @@ UIGestureRecognizer* gestureRecognizer;
                 self.userInteractionEnabled = YES;
                 gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
                 [self addGestureRecognizer:gestureRecognizer];
-                if (vibrationEnabled && [[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2) { // Check for Haptic/Taptic support
-                    haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
-                    [haptic prepare];
-                }
                 shouldBeInitialized = NO;
             } else if (shouldBeRemoved) {
                 self.userInteractionEnabled = NO;
@@ -61,7 +61,13 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)fastlpm_batteryTapped {
         [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
         if (vibrationEnabled) {
-            (haptic) ? [haptic impactOccurred] : AudioServicesPlaySystemSound(legacyFeedbackValue);
+            if (isHapticTapticDevice) {
+                haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
+                [haptic prepare];
+                [haptic impactOccurred];
+            } else {
+                AudioServicesPlaySystemSound(legacyFeedbackValue);
+            }
         }
     }
 
@@ -92,5 +98,6 @@ static void fastlpm_reloadPrefs() {
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
+    isHapticTapticDevice = IS_HAPTIC_TAPTIC_DEVICE; // Unmutable property, so called only one time
     %init;
 } 
