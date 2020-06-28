@@ -2,9 +2,6 @@
 #import <AudioToolbox/AudioServices.h>
 #import <Cephei/HBPreferences.h>
 
-// Check for Haptic/Taptic support
-#define IS_HAPTIC_TAPTIC_DEVICE ([[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2)
-
 @interface _UIBatteryView : UIView
 @end
 
@@ -17,7 +14,6 @@
 HBPreferences* prefs;
 BOOL shouldBeInitialized = NO;
 BOOL shouldBeRemoved = NO;
-BOOL isHapticTapticDevice;
 BOOL enabled = YES;
 BOOL vibrationEnabled = YES;
 UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
@@ -61,7 +57,7 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)fastlpm_batteryTapped {
         [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
         if (vibrationEnabled) {
-            if (isHapticTapticDevice) {
+            if ([[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2) { // Check for Haptic/Taptic support
                 haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
                 [haptic prepare];
                 [haptic impactOccurred];
@@ -98,6 +94,5 @@ static void fastlpm_reloadPrefs() {
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
-    isHapticTapticDevice = IS_HAPTIC_TAPTIC_DEVICE; // Unmutable property, so called only one time
     %init;
 } 
