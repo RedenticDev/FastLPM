@@ -12,21 +12,23 @@
 @end
 
 HBPreferences* prefs;
-BOOL shouldBeInitialized, shouldBeRemoved, enabled = YES, vibrationEnabled = YES;
+BOOL shouldBeInitialized = NO;
+BOOL shouldBeRemoved = NO;
+BOOL enabled = YES;
+BOOL vibrationEnabled = YES;
 UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
-NSInteger legacyFeedbackValue, hapticStyleValue;
+NSInteger legacyFeedbackValue = 1519;
+NSInteger hapticStyleValue = 1;
 
 _CDBatterySaver* saver;
-UIFeedbackGenerator* haptic;
+UIImpactFeedbackGenerator* haptic;
 UIGestureRecognizer* gestureRecognizer;
-
-// shouldBeInitialized si chgmt options
 
 %hook _UIBatteryView
 
     -(id)initWithFrame:(CGRect)arg1 {
         id _view = %orig;
-        if (_view) {
+        if (_view && enabled && !shouldBeRemoved) {
             shouldBeInitialized = YES; // Because unable to check superview IN init
         }
         return _view;
@@ -34,20 +36,24 @@ UIGestureRecognizer* gestureRecognizer;
 
     -(void)layoutSubviews {
         %orig;
-        if (shouldBeInitialized && [self.superview isKindOfClass:%c(_UIStatusBarForegroundView)]) {
-            saver = [_CDBatterySaver batterySaver];
-            self.userInteractionEnabled = YES;
-            gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
-            [self addGestureRecognizer:gestureRecognizer];
-            if (vibrationEnabled && [[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2) { // Check for Haptic/Taptic support
-                haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
-                [haptic prepare];
+        if ([self.superview isKindOfClass:%c(_UIStatusBarForegroundView)]) {
+            if (shouldBeInitialized) {
+                saver = [_CDBatterySaver batterySaver];
+                self.userInteractionEnabled = YES;
+                gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
+                [self addGestureRecognizer:gestureRecognizer];
+                if (vibrationEnabled && [[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2) { // Check for Haptic/Taptic support
+                    haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
+                    [haptic prepare];
+                }
+                shouldBeInitialized = NO;
+            } else if (shouldBeRemoved) {
+                self.userInteractionEnabled = NO;
+                if ([self gestureRecognizers]) {
+                    [self removeGestureRecognizer:gestureRecognizer];
+                }
+                shouldBeRemoved = NO;
             }
-            shouldBeInitialized = NO;
-        } else if (shouldBeRemoved) {
-            self.userInteractionEnabled = NO;
-            [self removeGestureRecognizer:gestureRecognizer];
-            shouldBeRemoved = NO;
         }
     }
 
@@ -55,7 +61,7 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)fastlpm_batteryTapped {
         [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
         if (vibrationEnabled) {
-            (haptic) ? [(UIImpactFeedbackGenerator*)haptic impactOccurred] : AudioServicesPlaySystemSound(legacyFeedbackValue);
+            (haptic) ? [haptic impactOccurred] : AudioServicesPlaySystemSound(legacyFeedbackValue);
         }
     }
 
@@ -63,9 +69,6 @@ UIGestureRecognizer* gestureRecognizer;
 
 static void fastlpm_reloadPrefs() {
     enabled = [prefs boolForKey:@"enabled"];
-    if (!enabled) {
-        shouldBeRemoved = YES;
-    }
     vibrationEnabled = [prefs boolForKey:@"vibrationEnabled"];
     legacyFeedbackValue = [prefs integerForKey:@"oldVibrationStrength"];
     hapticStyleValue = [prefs integerForKey:@"newVibrationStrength"];
@@ -77,6 +80,7 @@ static void fastlpm_reloadPrefs() {
         case 4: { hapticStyle = UIImpactFeedbackStyleRigid; } break;
         default: {} break;
     }
+    (enabled) ? (shouldBeInitialized = YES) : (shouldBeRemoved = YES);
 }
 
 %ctor {
@@ -88,7 +92,5 @@ static void fastlpm_reloadPrefs() {
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
-    if (enabled) {
-        %init;
-    }
+    %init;
 } 
