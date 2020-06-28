@@ -6,6 +6,9 @@ Replaces: com.olxios.quickpowermode
 Version: 1.0.0
 Architecture: iphoneos-arm
 Description: Toggle LPM by tapping the battery icon
+Icon: https://redentic.dev/depictions/com.redenticdev.fastlpm/icon.png
+Depiction: https://redentic.dev/depictions/?p=com.redenticdev.fastlpm
+SileoDepiction: https://redentic.dev/depictions/com.redenticdev.fastlpm/sileo.json
 Maintainer: RedenticDev <redenticdev@gmail.com>
 Author: RedenticDev <redenticdev@gmail.com>
 Section: Tweaks
