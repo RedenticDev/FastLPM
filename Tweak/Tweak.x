@@ -23,6 +23,7 @@ double holdDuration = 0.5;
 NSInteger legacyFeedbackValue = 1519;
 NSInteger hapticStyleValue = 1;
 
+_UIBatteryView* batteryView;
 _CDBatterySaver* saver;
 UIImpactFeedbackGenerator* haptic;
 UIGestureRecognizer* gestureRecognizer;
@@ -40,6 +41,7 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)layoutSubviews {
         %orig;
         if ([self.superview isKindOfClass:%c(_UIStatusBarForegroundView)]) {
+            if (!batteryView) batteryView = self;
             if (shouldBeInitialized) {
                 saver = [_CDBatterySaver batterySaver];
                 self.userInteractionEnabled = YES;
@@ -95,6 +97,7 @@ static void fastlpm_reloadPrefs() {
         default: {} break;
     }
     (enabled) ? (shouldBeInitialized = YES) : (shouldBeRemoved = YES);
+    if (batteryView) [batteryView setNeedsLayout];
 }
 
 %ctor {
