@@ -57,7 +57,7 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)fastlpm_batteryTapped {
         [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
         if (vibrationEnabled) {
-            if ([[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] == 2) { // Check for Haptic/Taptic support
+            if ([[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] > 1) { // Check for Haptic/Taptic support
                 haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
                 [haptic prepare];
                 [haptic impactOccurred];
