@@ -17,6 +17,9 @@ BOOL shouldBeRemoved = NO;
 BOOL enabled = YES;
 BOOL vibrationEnabled = YES;
 UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
+NSString* tapsOrHold = @"taps";
+NSInteger tapsNumber = 1;
+double holdDuration = 0.5;
 NSInteger legacyFeedbackValue = 1519;
 NSInteger hapticStyleValue = 1;
 
@@ -40,7 +43,13 @@ UIGestureRecognizer* gestureRecognizer;
             if (shouldBeInitialized) {
                 saver = [_CDBatterySaver batterySaver];
                 self.userInteractionEnabled = YES;
-                gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
+                if ([tapsOrHold isEqualToString:@"taps"]) {
+                    gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
+                    gestureRecognizer.numberOfTouches = tapsNumber;
+                } else {
+                    gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
+                    gestureRecognizer.minimumPressDuration = holdDuration;
+                }
                 [self addGestureRecognizer:gestureRecognizer];
                 shouldBeInitialized = NO;
             } else if (shouldBeRemoved) {
@@ -71,6 +80,9 @@ UIGestureRecognizer* gestureRecognizer;
 
 static void fastlpm_reloadPrefs() {
     enabled = [prefs boolForKey:@"enabled"];
+    tapsOrHold = [prefs objectForKey:@"tapsOrHold"];
+    tapsNumber = [prefs integerForKey:@"numberOfTaps"];
+    holdDuration = [prefs doubleForKey:@"holdDuration"];
     vibrationEnabled = [prefs boolForKey:@"vibrationEnabled"];
     legacyFeedbackValue = [prefs integerForKey:@"oldVibrationStrength"];
     hapticStyleValue = [prefs integerForKey:@"newVibrationStrength"];
@@ -88,6 +100,9 @@ static void fastlpm_reloadPrefs() {
 %ctor {
     prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
     [prefs registerBool:&enabled default:YES forKey:@"enabled"];
+    [prefs registerObject:&tapsOrHold default:@"taps" forKey:@"tapsOrHold"];
+    [prefs registerInteger:&tapsNumber default:1 forKey:@"numberOfTaps"];
+    [prefs registerDouble:&holdDuration default:0.5 forKey:@"holdDuration"];
     [prefs registerBool:&vibrationEnabled default:YES forKey:@"vibrationEnabled"];
     [prefs registerInteger:&legacyFeedbackValue default:1519 forKey:@"oldVibrationStrength"];
     [prefs registerInteger:&hapticStyleValue default:1 forKey:@"newVibrationStrength"];

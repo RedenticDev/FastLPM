@@ -3,7 +3,13 @@
     ENABLED = "Activé";
     RESPRING_INFO = "Un respring peut être nécessaire pour le switch Activé seulement.";
 
-    GLOBAL_SETTINGS = "Paramètres globaux";
+    ACTIVATION_SETTINGS = "Options d'activation";
+    TAPS = "En tapant";
+    HOLD = "En maintenant";
+    NUMBER_OF_TAPS = "Nombre de taps";
+    HOLDING_TIME = "Durée de maintien (en secondes)";
+
+    VIBRATION_ACTIVATION = "Activation des vibrations";
     VIBRATIONS_ENABLED = "Vibrations";
 
     VIBRATIONS_7_AND_NEWER = "Type de vibrations (iPhone 7 & plus récent)";
