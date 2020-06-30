@@ -97,7 +97,14 @@ static void fastlpm_reloadPrefs() {
         default: {} break;
     }
     (enabled) ? (shouldBeInitialized = YES) : (shouldBeRemoved = YES);
-    if (batteryView) [batteryView setNeedsLayout];
+}
+
+static void fastlpm_reloadPrefsAndRefresh() {
+    fastlpm_reloadPrefs();
+    if (batteryView) { // Force calls layoutSubviews
+        [batteryView setNeedsLayout];
+        [batteryView layoutIfNeeded];
+    }
 }
 
 %ctor {
@@ -111,6 +118,7 @@ static void fastlpm_reloadPrefs() {
     [prefs registerInteger:&hapticStyleValue default:1 forKey:@"newVibrationStrength"];
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefsAndRefresh, CFSTR("com.redenticdev.fastlpm/ReloadPrefsAndRefresh"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
     %init;
 } 

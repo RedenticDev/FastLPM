@@ -31,7 +31,7 @@
 			<key>label</key>
 			<string>ENABLED</string>
 			<key>PostNotification</key>
-			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+			<string>com.redenticdev.fastlpm/ReloadPrefsAndRefresh</string>
 		</dict>
 
 		<dict>
@@ -62,7 +62,7 @@
 			<key>alignment</key>
 			<string>2</string>
 			<key>PostNotification</key>
-			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+			<string>com.redenticdev.fastlpm/ReloadPrefsAndRefresh</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -86,7 +86,7 @@
 			<key>label</key>
 			<string>NUMBER_OF_TAPS</string>
 			<key>PostNotification</key>
-			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+			<string>com.redenticdev.fastlpm/ReloadPrefsAndRefresh</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -110,7 +110,7 @@
 			<key>label</key>
 			<string>HOLDING_TIME</string>
 			<key>PostNotification</key>
-			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+			<string>com.redenticdev.fastlpm/ReloadPrefsAndRefresh</string>
 		</dict>
 		<dict>
 			<key>cell</key>
