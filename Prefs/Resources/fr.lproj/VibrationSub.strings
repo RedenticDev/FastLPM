@@ -1,0 +1,13 @@
+{
+    VIBRATION = "Options des vibrations";
+
+    VIBRATIONS_7_AND_NEWER = "Type de vibrations (iPhone 7 & plus récent)";
+    LIGHT = "Léger";
+    MEDIUM = "Moyen";
+    HEAVY = "Fort";
+    SOFT = "Doux";
+    RIGID = "Rigide";
+
+    VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
+    STRONG = "Puissant";
+}

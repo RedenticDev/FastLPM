@@ -1,0 +1,17 @@
+{
+    ACTIVATION = "Activation";
+
+    TAPS = "Toucher";
+    HOLD = "Maintenir";
+    SWIPE = "Glisser";
+    3D_TOUCH = "Appuyer fort";
+
+    NUMBER_OF_TAPS = "Nombre de taps";
+    HOLDING_TIME = "Durée de maintien (en secondes)";
+
+    DIRECTION = "Direction du glissement";
+    LEFT = "Gauche";
+    RIGHT = "Droite";
+    UP = "Haut";
+    DOWN = "Bas";
+}

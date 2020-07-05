@@ -1,26 +1,15 @@
 {
     FASTLPM = "FastLPM";
     ENABLED = "Activé";
-    RESPRING_INFO = "Un respring peut être nécessaire pour le switch Activé seulement.";
+    RESPRING_INFO = "Un respring est requis pour le switch Activé.";
 
     ACTIVATION_SETTINGS = "Options d'activation";
-    TAPS = "En tapant";
-    HOLD = "En maintenant";
-    NUMBER_OF_TAPS = "Nombre de taps";
-    HOLDING_TIME = "Durée de maintien (en secondes)";
+    ACTIVATION = "Activation";
+    NEEDS_RESPRING = "Un respring est requis pour la section Activation.";
 
     VIBRATION_ACTIVATION = "Activation des vibrations";
     VIBRATIONS_ENABLED = "Vibrations";
-
-    VIBRATIONS_7_AND_NEWER = "Type de vibrations (iPhone 7 & plus récent)";
-    LIGHT = "Léger";
-    MEDIUM = "Moyen";
-    HEAVY = "Fort";
-    SOFT = "Doux";
-    RIGID = "Rigide";
-
-    VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
-    STRONG = "Puissant";
+    VIBRATION_SETTINGS = "Options des vibrations";
 
     CONTRIBUTORS = "Contributeurs";
     CONTRIBUTE_TO_TRANSLATIONS = "📖 Contribuez aux traductions !";

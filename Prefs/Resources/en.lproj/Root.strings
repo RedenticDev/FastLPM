@@ -1,27 +1,16 @@
 {
     FASTLPM = "FastLPM";
-    ENABLED = "Enabled";
-    RESPRING_INFO = "A respring could be required only for Enabled toggle.";
+    ENABLED = "Enable";
+    RESPRING_INFO = "Respring required for the Enable toggle.";
 
     ACTIVATION_SETTINGS = "Activation Settings";
-    TAPS = "By tapping";
-    HOLD = "By holding";
-    NUMBER_OF_TAPS = "Number of taps";
-    HOLDING_TIME = "Holding Time (in seconds)";
+    ACTIVATION = "Activation";
+    NEEDS_RESPRING = "Respring required for the Activation section.";
 
     VIBRATION_ACTIVATION = "Vibration Activation";
     VIBRATIONS_ENABLED = "Vibrations";
+    VIBRATION_SETTINGS = "Vibration Settings";
 
-    VIBRATIONS_7_AND_NEWER = "Vibrations Strength (iPhone 7 & newer)";
-    LIGHT = "Light";
-    MEDIUM = "Medium";
-    HEAVY = "Heavy";
-    SOFT = "Soft";
-    RIGID = "Rigid";
-
-    VIBRATIONS_6S_AND_LESS = "Vibrations Strength (iPhone 6S & older)";
-    STRONG = "Strong";
-    
     CONTRIBUTORS = "Contributors";
     CONTRIBUTE_TO_TRANSLATIONS = "📖 Contribute to translations!";
 

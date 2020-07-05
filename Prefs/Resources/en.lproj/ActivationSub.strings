@@ -1,0 +1,17 @@
+{
+    ACTIVATION = "Activation";
+
+    TAPS = "Tap";
+    HOLD = "Hold";
+    SWIPE = "Swipe";
+    3D_TOUCH = "Force touch";
+
+    NUMBER_OF_TAPS = "Number of taps";
+    HOLDING_TIME = "Holding Time (in seconds)";
+
+    DIRECTION = "Swipe direction";
+    LEFT = "Left";
+    RIGHT = "Right";
+    UP = "Up";
+    DOWN = "Down";
+}
