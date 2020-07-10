@@ -17,6 +17,12 @@
     VIBRATIONS_ENABLED = "Vibrations";
     VIBRATION_SETTINGS = "Options des vibrations";
 
+    OTHER_TITLE = "Autre";
+    RESET_PREFS = "Réinitialiser les options";
+    RESET_CONFIRMATION = "Voulez-vous vraiment réinitialiser les préférences de FastLPM ? Cette action va respring votre appareil.";
+    CONFIRM = "Confirmer";
+    CANCEL = "Annuler";
+
     CONTRIBUTORS = "Contributeurs";
     CONTRIBUTE_TO_TRANSLATIONS = "📖 Contribuez aux traductions !";
 

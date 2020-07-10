@@ -88,6 +88,34 @@
 			<string>VibrationSub</string>
 		</dict>
 
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>OTHER_TITLE</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>RESET_PREFS</string>
+			<key>action</key>
+			<string>resetPreferences</string>
+			<key>isDestructive</key>
+			<true/>
+			<key>confirmation</key>
+			<dict>
+				<key>prompt</key>
+				<string>RESET_CONFIRMATION</string>
+				<key>title</key>
+				<string>CONFIRM</string>
+				<key>okTitle</key>
+				<string>CONFIRM</string>
+				<key>cancelTitle</key>
+				<string>CANCEL</string>
+			</dict>
+		</dict>
+
 		<!-- Contributors -->
 		<dict>
 			<key>cell</key>
