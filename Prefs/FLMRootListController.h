@@ -6,6 +6,8 @@
 #import <Cephei/HBPreferences.h>
 #import <Cephei/HBRespringController.h>
 
+#define localize(a, b) NSLocalizedStringWithDefaultValue(a, b, [NSBundle bundleWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle"], nil, nil)
+
 @interface RCLabeledSliderCell : PSSliderTableCell
 @end
 
