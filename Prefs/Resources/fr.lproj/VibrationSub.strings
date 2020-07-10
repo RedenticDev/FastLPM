@@ -10,4 +10,6 @@
 
     VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
     STRONG = "Puissant";
+
+    FOOTER_TEXT = "FastLPM par RedenticDev";
 }

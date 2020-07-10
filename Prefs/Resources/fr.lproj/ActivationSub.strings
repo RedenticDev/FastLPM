@@ -1,5 +1,8 @@
 {
     ACTIVATION = "Activation";
+    ACTIVATION_OPTIONS = "Options d'Activation";
+    AREA_ENLARGEMENT = "Agrandissement de la zone d'activation (en px)";
+    ENLARGEMENT_INFO = "Ne s'applique que dans la zone de la barre de status.";
 
     TAPS = "Toucher";
     HOLD = "Maintenir";
@@ -14,4 +17,8 @@
     RIGHT = "Droite";
     UP = "Haut";
     DOWN = "Bas";
+
+    RESPRING_INFO = "Un respring est requis pour cette page.";
+
+    FOOTER_TEXT = "FastLPM par RedenticDev";
 }

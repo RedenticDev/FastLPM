@@ -1,5 +1,11 @@
 {
     FASTLPM = "FastLPM";
+
+    RESPRING = "Respring";
+    RESPRING_PROMPT = "Voulez-vous vraiment respring votre appareil ?";
+    YES_PROMPT = "Oui";
+    NO_PROMPT = "Non";
+
     ENABLED = "Activé";
     RESPRING_INFO = "Un respring est requis pour le switch Activé.";
 

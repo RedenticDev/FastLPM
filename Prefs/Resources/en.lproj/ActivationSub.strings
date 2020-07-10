@@ -1,5 +1,8 @@
 {
     ACTIVATION = "Activation";
+    ACTIVATION_OPTIONS = "Activation Options";
+    AREA_ENLARGEMENT = "Enlargement of the activation area (in px)";
+    ENLARGEMENT_INFO = "Only applies in the status bar area.";
 
     TAPS = "Tap";
     HOLD = "Hold";
@@ -14,4 +17,8 @@
     RIGHT = "Right";
     UP = "Up";
     DOWN = "Down";
+
+    RESPRING_INFO = "A respring is required for this page.";
+
+    FOOTER_TEXT = "FastLPM by RedenticDev";
 }

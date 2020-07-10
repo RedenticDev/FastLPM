@@ -1,5 +1,11 @@
 {
     FASTLPM = "FastLPM";
+
+    RESPRING = "Respring";
+    RESPRING_PROMPT = "Do you really want to respring your device?";
+    YES_PROMPT = "Yes";
+    NO_PROMPT = "No";
+
     ENABLED = "Enable";
     RESPRING_INFO = "Respring required for the Enable toggle.";
 
