@@ -7,6 +7,14 @@
 
 		<dict>
 			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>ACTIVATION_OPTIONS</string>
+			<key>footerText</key>
+			<string>ENLARGEMENT_INFO</string>
+		</dict>
+		<dict>
+			<key>cell</key>
 			<string>PSSegmentCell</string>
 			<key>default</key>
 			<integer>0</integer>
@@ -30,6 +38,32 @@
 			</array>
 			<key>alignment</key>
 			<string>4</string>
+			<key>PostNotification</key>
+			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>cellClass</key>
+			<string>RCLabeledSliderCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.redenticdev.fastlpm</string>
+			<key>key</key>
+			<string>areaEnlargement</string>
+			<key>min</key>
+			<integer>0</integer>
+			<key>max</key>
+			<integer>100</integer>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<integer>100</integer>
+			<key>label</key>
+			<string>AREA_ENLARGEMENT</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
@@ -133,6 +167,24 @@
 			<string>4</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>RESPRING_INFO</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>FOOTER_TEXT</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerAlignment</key>
+			<real>1</real>
 		</dict>
 
     </array>

@@ -75,6 +75,17 @@
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
 
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>FOOTER_TEXT</string>
+			<key>isStaticText</key>
+			<true/>
+			<key>footerAlignment</key>
+			<real>1</real>
+		</dict>
+
     </array>
 	<key>title</key>
 	<string>VIBRATION</string>
