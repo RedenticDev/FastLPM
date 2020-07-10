@@ -1,9 +1,13 @@
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
+#import <Preferences/PSSliderTableCell.h>
 #import <CepheiPrefs/HBRootListController.h>
 #import <CepheiPrefs/HBAppearanceSettings.h>
 #import <Cephei/HBPreferences.h>
-#import "NSTask.h"
+#import <Cephei/HBRespringController.h>
+
+@interface RCLabeledSliderCell : PSSliderTableCell
+@end
 
 @interface FLMAppearanceSettings : HBAppearanceSettings
 @end
@@ -20,6 +24,5 @@
 
 -(void)resetPreferences;
 -(void)respring;
--(void)respringUtil;
 
 @end
