@@ -141,11 +141,27 @@
 	[self presentViewController:respring animated:YES completion:nil];
 }
 
-- (void)respringUtil {
-	NSTask *t = [[[NSTask alloc] init] autorelease];
-    [t setLaunchPath:@"/usr/bin/killall"];
-    [t setArguments:[NSArray arrayWithObjects:@"backboardd", nil]];
-    [t launch];
+@end
+
+@implementation RCLabeledSliderCell // Improved version of kritanta's KRLabeledSliderCell
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier specifier:(PSSpecifier*)specifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier]) {
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 20)];
+        label.text = localize(specifier.properties[@"label"], (specifier.properties[@"strings"] ? specifier.properties[@"strings"] : @"Root"));
+        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        [label sizeToFit];
+        [self.contentView insertSubview:label atIndex:0];
+        specifier.properties[@"height"] = [NSString stringWithFormat:@"%ld", (NSInteger)(label.frame.size.height + self.frame.size.height) + 20];
+    }
+
+    return self;
+}
+
+-(void)layoutSubviews {
+    [super layoutSubviews];
+    [self.control setFrame:CGRectMake(self.control.frame.origin.x, self.frame.size.height - 45, self.control.frame.size.width, self.control.frame.size.height)];
 }
 
 @end
