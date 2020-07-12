@@ -8,16 +8,14 @@
     if (self) {
         HBAppearanceSettings *appearanceSettings = [[FLMAppearanceSettings alloc] init];
         self.hb_appearanceSettings = appearanceSettings;
-        self.respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Respring" style:UIBarButtonItemStylePlain target:self action:@selector(respring)];
-        self.respringButton.tintColor = [UIColor whiteColor];
+        self.respringButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"RESPRING", @"Root") style:UIBarButtonItemStylePlain target:self action:@selector(respring)];
         self.navigationItem.rightBarButtonItem = self.respringButton;
 
         self.navigationItem.titleView = [UIView new];
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleLabel.text = @"FastLPM";
-        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.text = localize(@"FASTLPM", @"Root");
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.navigationItem.titleView addSubview:self.titleLabel];
 
@@ -129,12 +127,12 @@
 }
 
 - (void)respring {
-	UIAlertController *respring = [UIAlertController alertControllerWithTitle:@"FastLPM" message:@"Do you really want to respring your device?" preferredStyle:UIAlertControllerStyleActionSheet];
-	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+	UIAlertController *respring = [UIAlertController alertControllerWithTitle:localize(@"FASTLPM", @"Root") message:localize(@"RESPRING_PROMPT", @"Root") preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:localize(@"YES_PROMPT", @"Root") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
 		[HBRespringController respring];
 	}];
 
-	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:localize(@"NO_PROMPT", @"Root") style:UIAlertActionStyleCancel handler:nil];
 
 	[respring addAction:confirmAction];
 	[respring addAction:cancelAction];
