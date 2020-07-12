@@ -15,13 +15,19 @@ HBPreferences* prefs;
 BOOL shouldBeInitialized = NO;
 BOOL shouldBeRemoved = NO;
 BOOL enabled = YES;
-BOOL vibrationEnabled = YES;
-UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
-NSString* tapsOrHold = @"taps";
+NSString* typeOfGesture = @"taps";
+NSInteger areaEnlargement = 0;
 NSInteger tapsNumber = 1;
 double holdDuration = 0.5;
-NSInteger legacyFeedbackValue = 1519;
+UISwipeGestureRecognizerDirection swipeDirection = UISwipeGestureRecognizerDirectionLeft;
+NSInteger swipeDirectionValue = 0;
+BOOL vibrationEnabled = YES;
 NSInteger hapticStyleValue = 1;
+UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
+NSInteger legacyFeedbackValue = 1519;
+BOOL repeatVibrations = NO;
+NSInteger vibrationRepetitions = 1;
+double vibrationRepetitionInterval = 0.5;
 
 _UIBatteryView* batteryView;
 _CDBatterySaver* saver;
@@ -64,6 +70,10 @@ UIGestureRecognizer* gestureRecognizer;
         }
     }
 
+    -(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
+        return CGRectContainsPoint(CGRectInset(self.bounds, -areaEnlargement, -areaEnlargement), point) ? self : nil;
+    }
+
     %new
     -(void)fastlpm_batteryTapped {
         [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
@@ -72,8 +82,31 @@ UIGestureRecognizer* gestureRecognizer;
                 haptic = [[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle];
                 [haptic prepare];
                 [haptic impactOccurred];
+                if (repeatVibrations) {
+                    double tempInterval = vibrationRepetitionInterval;
+                    for (int i = 0; i < vibrationRepetitions - 1; i++) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                            [haptic impactOccurred];
+                        });
+                        tempInterval += vibrationRepetitionInterval;
+                    }
+                }
+                haptic = nil;
             } else {
-                AudioServicesPlaySystemSound(legacyFeedbackValue);
+                AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
+                    AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
+                });
+                if (repeatVibrations) {
+                    double tempInterval = vibrationRepetitionInterval;
+                    for (int i = 0; i < vibrationRepetitions - 1; i++) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                            AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
+                                AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
+                            });
+                        });
+                        tempInterval += vibrationRepetitionInterval;
+                    }
+                }
             }
         }
     }
@@ -82,7 +115,8 @@ UIGestureRecognizer* gestureRecognizer;
 
 static void fastlpm_reloadPrefs() {
     enabled = [prefs boolForKey:@"enabled"];
-    tapsOrHold = [prefs objectForKey:@"tapsOrHold"];
+    typeOfGesture = [prefs objectForKey:@"typeOfGesture"];
+    areaEnlargement = [prefs integerForKey:@"areaEnlargement"];
     tapsNumber = [prefs integerForKey:@"numberOfTaps"];
     holdDuration = [prefs doubleForKey:@"holdDuration"];
     vibrationEnabled = [prefs boolForKey:@"vibrationEnabled"];
@@ -96,6 +130,17 @@ static void fastlpm_reloadPrefs() {
         case 4: { hapticStyle = UIImpactFeedbackStyleRigid; } break;
         default: {} break;
     }
+    swipeDirectionValue = [prefs integerForKey:@"swipeDirectionValue"];
+    switch (swipeDirectionValue) {
+        case 0: { swipeDirection = UISwipeGestureRecognizerDirectionLeft; } break;
+        case 1: { swipeDirection = UISwipeGestureRecognizerDirectionRight; } break;
+        case 2: { swipeDirection = UISwipeGestureRecognizerDirectionUp; } break;
+        case 3: { swipeDirection = UISwipeGestureRecognizerDirectionDown; } break;
+        default: {} break;
+    }
+    repeatVibrations = [prefs boolForKey:@"repeatVibrations"];
+    vibrationRepetitions = [prefs integerForKey:@"vibrationRepetitions"];
+    vibrationRepetitionInterval = [prefs doubleForKey:@"vibrationInterval"];
     (enabled) ? (shouldBeInitialized = YES) : (shouldBeRemoved = YES);
 }
 
@@ -110,15 +155,19 @@ static void fastlpm_reloadPrefsAndRefresh() {
 %ctor {
     prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
     [prefs registerBool:&enabled default:YES forKey:@"enabled"];
-    [prefs registerObject:&tapsOrHold default:@"taps" forKey:@"tapsOrHold"];
+    [prefs registerObject:&typeOfGesture default:@"taps" forKey:@"typeOfGesture"];
+    [prefs registerInteger:&areaEnlargement default:0 forKey:@"areaEnlargement"];
     [prefs registerInteger:&tapsNumber default:1 forKey:@"numberOfTaps"];
     [prefs registerDouble:&holdDuration default:0.5 forKey:@"holdDuration"];
+    [prefs registerInteger:&swipeDirectionValue default:0 forKey:@"swipeDirectionValue"];
     [prefs registerBool:&vibrationEnabled default:YES forKey:@"vibrationEnabled"];
     [prefs registerInteger:&legacyFeedbackValue default:1519 forKey:@"oldVibrationStrength"];
     [prefs registerInteger:&hapticStyleValue default:1 forKey:@"newVibrationStrength"];
+    [prefs registerBool:&repeatVibrations default:NO forKey:@"repeatVibrations"];
+    [prefs registerInteger:&vibrationRepetitions default:1 forKey:@"vibrationRepetitions"];
+    [prefs registerDouble:&vibrationRepetitionInterval default:0.5 forKey:@"vibrationInterval"];
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
-    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefsAndRefresh, CFSTR("com.redenticdev.fastlpm/ReloadPrefsAndRefresh"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
     %init;
 } 
