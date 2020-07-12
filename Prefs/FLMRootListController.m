@@ -125,13 +125,13 @@
 // Beginning of useful code
 - (void)resetPreferences {
     [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.redenticdev.fastlpm.plist" error:nil];
-    [self respringUtil];
+    [HBRespringController respring];
 }
 
 - (void)respring {
 	UIAlertController *respring = [UIAlertController alertControllerWithTitle:@"FastLPM" message:@"Do you really want to respring your device?" preferredStyle:UIAlertControllerStyleActionSheet];
 	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
-		[self respringUtil];
+		[HBRespringController respring];
 	}];
 
 	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
