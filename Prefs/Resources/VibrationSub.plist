@@ -10,6 +10,8 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>VIBRATIONS_7_AND_NEWER</string>
+			<key>footerText</key>
+			<string>IOS_13_INFOS</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -71,6 +73,81 @@
 			</array>
 			<key>alignment</key>
 			<string>3</string>
+			<key>PostNotification</key>
+			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>REPETITION_SETTINGS</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.redenticdev.fastlpm</string>
+			<key>key</key>
+			<string>repeatVibrations</string>
+			<key>label</key>
+			<string>REPEAT_VIBRATIONS</string>
+			<key>PostNotification</key>
+			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>cellClass</key>
+			<string>RCLabeledSliderCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>com.redenticdev.fastlpm</string>
+			<key>key</key>
+			<string>vibrationRepetitions</string>
+			<key>min</key>
+			<integer>1</integer>
+			<key>max</key>
+			<integer>5</integer>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<true/>
+			<key>segmentCount</key>
+			<integer>4</integer>
+			<key>label</key>
+			<string>VIBRATION_REPETITIONS</string>
+			<key>strings</key>
+			<string>VibrationSub</string>
+			<key>PostNotification</key>
+			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>cellClass</key>
+			<string>RCLabeledSliderCell</string>
+			<key>default</key>
+			<real>0.5</real>
+			<key>defaults</key>
+			<string>com.redenticdev.fastlpm</string>
+			<key>key</key>
+			<string>vibrationInterval</string>
+			<key>min</key>
+			<real>0.2</real>
+			<key>max</key>
+			<real>1</real>
+			<key>showValue</key>
+			<true/>
+			<key>isSegmented</key>
+			<false/>
+			<key>label</key>
+			<string>VIBRATION_INTERVAL</string>
+			<key>strings</key>
+			<string>VibrationSub</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>

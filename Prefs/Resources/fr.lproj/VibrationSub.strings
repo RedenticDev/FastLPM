@@ -7,9 +7,15 @@
     HEAVY = "Fort";
     SOFT = "Doux";
     RIGID = "Rigide";
+    IOS_13_INFOS = "'Doux' & 'Rigide' sont disponibles uniquement en iOS 13+.";
 
     VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
     STRONG = "Puissant";
+    
+    REPETITION_SETTINGS = "Options de répétition";
+    REPEAT_VIBRATIONS = "Répéter les vibrations";
+    VIBRATION_REPETITIONS = "Nombre de répétitions";
+    VIBRATION_INTERVAL = "Intervalle entre les répétitions (en secondes)";
 
     FOOTER_TEXT = "FastLPM par RedenticDev";
 }
