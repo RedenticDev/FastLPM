@@ -64,6 +64,8 @@
 			<integer>100</integer>
 			<key>label</key>
 			<string>AREA_ENLARGEMENT</string>
+			<key>strings</key>
+			<string>ActivationSub</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
@@ -97,6 +99,8 @@
 			<integer>4</integer>
 			<key>label</key>
 			<string>NUMBER_OF_TAPS</string>
+			<key>strings</key>
+			<string>ActivationSub</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
@@ -130,6 +134,8 @@
 			<integer>1</integer>
 			<key>label</key>
 			<string>HOLDING_TIME</string>
+			<key>strings</key>
+			<string>ActivationSub</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
