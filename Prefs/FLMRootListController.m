@@ -3,9 +3,7 @@
 @implementation FLMRootListController
 
 - (instancetype)init {
-    self = [super init];
-
-    if (self) {
+    if (self = [super init]) {
         HBAppearanceSettings *appearanceSettings = [[FLMAppearanceSettings alloc] init];
         self.hb_appearanceSettings = appearanceSettings;
         self.respringButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"RESPRING", @"Root") style:UIBarButtonItemStylePlain target:self action:@selector(respring)];
@@ -82,21 +80,7 @@
 
     self.navigationController.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00 green:0.00 blue:1.00 alpha:1.00];
     [self.navigationController.navigationController.navigationBar setShadowImage:[UIImage new]];
-    self.navigationController.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.navigationController.navigationController.navigationBar.translucent = NO;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    [self.navigationController.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -114,9 +98,7 @@
         }];
     }
 
-    if (offsetY > 0) {
-        offsetY = 0;
-    }
+    if (offsetY > 0) offsetY = 0;
     self.headerImageView.frame = CGRectMake(0, offsetY, self.headerView.frame.size.width, 200 - offsetY);
 }
 
