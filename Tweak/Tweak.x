@@ -47,18 +47,21 @@ UIGestureRecognizer* gestureRecognizer;
     -(void)layoutSubviews {
         %orig;
         if ([self.superview isKindOfClass:%c(_UIStatusBarForegroundView)]) {
-            if (!batteryView) batteryView = self;
+            batteryView = self;
             if (shouldBeInitialized) {
                 saver = [_CDBatterySaver batterySaver];
                 self.userInteractionEnabled = YES;
-                if ([tapsOrHold isEqualToString:@"taps"]) {
+                if ([typeOfGesture isEqualToString:@"taps"]) {
                     gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
-                    gestureRecognizer.numberOfTouches = tapsNumber;
-                } else {
+                    ((UITapGestureRecognizer*)gestureRecognizer).numberOfTapsRequired = tapsNumber;
+                } else if ([typeOfGesture isEqualToString:@"hold"]) {
                     gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
-                    gestureRecognizer.minimumPressDuration = holdDuration;
+                    ((UILongPressGestureRecognizer*)gestureRecognizer).minimumPressDuration = holdDuration;
+                } else if ([typeOfGesture isEqualToString:@"swipe"]) {
+                    gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped)];
+                    ((UISwipeGestureRecognizer*)gestureRecognizer).direction = swipeDirection;
                 }
-                [self addGestureRecognizer:gestureRecognizer];
+                if (gestureRecognizer) [self addGestureRecognizer:gestureRecognizer];
                 shouldBeInitialized = NO;
             } else if (shouldBeRemoved) {
                 self.userInteractionEnabled = NO;
@@ -142,14 +145,8 @@ static void fastlpm_reloadPrefs() {
     vibrationRepetitions = [prefs integerForKey:@"vibrationRepetitions"];
     vibrationRepetitionInterval = [prefs doubleForKey:@"vibrationInterval"];
     (enabled) ? (shouldBeInitialized = YES) : (shouldBeRemoved = YES);
-}
-
-static void fastlpm_reloadPrefsAndRefresh() {
-    fastlpm_reloadPrefs();
-    if (batteryView) { // Force calls layoutSubviews
-        [batteryView setNeedsLayout];
-        [batteryView layoutIfNeeded];
-    }
+    [batteryView setNeedsLayout];
+    [batteryView layoutIfNeeded];
 }
 
 %ctor {
