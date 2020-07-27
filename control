@@ -1,7 +1,6 @@
 Package: com.redenticdev.fastlpm
 Name: FastLPM
 Depends: mobilesubstrate, preferenceloader, firmware (>= 11), ws.hbang.common
-Conflicts: me.conorthedev.peep
 Replaces: com.olxios.quickpowermode
 Version: 1.1.0
 Architecture: iphoneos-arm
