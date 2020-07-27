@@ -1,13 +1,14 @@
 {
     ACTIVATION = "Activation";
     ACTIVATION_OPTIONS = "Activation Options";
+    3D_TOUCH_WARNING = "'3D Touch' is replaced by long press if your device does not support it.";
     AREA_ENLARGEMENT = "Enlargement of the activation area (in px)";
     ENLARGEMENT_INFO = "Only applies in the status bar area.";
 
     TAPS = "Tap";
     HOLD = "Hold";
     SWIPE = "Swipe";
-    3D_TOUCH = "Force touch";
+    3D_TOUCH = "3D Touch";
 
     NUMBER_OF_TAPS = "Number of taps";
     HOLDING_TIME = "Holding Time (in seconds)";

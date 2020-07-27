@@ -11,7 +11,7 @@
 			<key>label</key>
 			<string>ACTIVATION_OPTIONS</string>
 			<key>footerText</key>
-			<string>ENLARGEMENT_INFO</string>
+			<string>3D_TOUCH_WARNING</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -40,6 +40,12 @@
 			<string>4</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>ENLARGEMENT_INFO</string>
 		</dict>
 		<dict>
 			<key>cell</key>
