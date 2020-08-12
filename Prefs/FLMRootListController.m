@@ -57,6 +57,20 @@
     self.headerImageView.image = [UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/FLMPrefs.bundle/Banner.png"];
     self.headerImageView.translatesAutoresizingMaskIntoConstraints = NO;
 
+    UILabel *versionTitle = [[UILabel alloc] initWithFrame:CGRectMake(140, 105, 200, 30)];
+    versionTitle.text = [self packageVersion];
+    versionTitle.textColor = [UIColor whiteColor];
+    [versionTitle setFont:[UIFont systemFontOfSize:24.0f]];
+    versionTitle.numberOfLines = 0;
+    versionTitle.lineBreakMode = NSLineBreakByWordWrapping;
+    [versionTitle sizeToFit];
+    [self.headerImageView addSubview:versionTitle];
+    versionTitle.layer.shadowColor = [UIColor blackColor].CGColor;
+    versionTitle.layer.shadowRadius = 3.0;
+    versionTitle.layer.shadowOpacity = 0.4;
+    versionTitle.layer.shadowOffset = CGSizeMake(1, 1);
+    versionTitle.layer.masksToBounds = NO;
+
     [self.headerView addSubview:self.headerImageView];
     [NSLayoutConstraint activateConstraints:@[
         [self.headerImageView.topAnchor constraintEqualToAnchor:self.headerView.topAnchor],
@@ -142,11 +156,18 @@
         }];
     }
 
-    if (offsetY > 0) offsetY = 0;
-    self.headerImageView.frame = CGRectMake(0, offsetY, self.headerView.frame.size.width, 200 - offsetY);
+    self.headerImageView.frame = CGRectMake(0, 0, self.headerImageView.frame.size.width, 200 - (offsetY + 200));
 }
 
 // Beginning of useful code
+- (NSString *)packageVersion {
+    char ver[64];
+    FILE *fp = popen("dpkg -s com.redenticdev.fastlpm | grep -i version | cut -d':' -f2 | xargs", "r");
+    fscanf(fp, "%s", ver);
+    pclose(fp);
+    return [NSString stringWithFormat:@"v%@", [NSString stringWithCString:ver encoding:NSUTF8StringEncoding]];
+}
+
 - (void)resetPreferences {
     [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.redenticdev.fastlpm.plist" error:nil];
     [HBRespringController respring];
