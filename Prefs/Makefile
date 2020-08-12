@@ -1,12 +1,12 @@
 ARCHS = arm64 arm64e
-TARGET = iphone:clang:11.2:11.2
+TARGET = iphone:clang:13.5:11.2
 
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = FLMPrefs
 $(BUNDLE_NAME)_FILES = $(wildcard *.m)
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
-$(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
+$(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences OnBoardingKit
 $(BUNDLE_NAME)_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 
 include $(THEOS_MAKE_PATH)/bundle.mk

@@ -1,4 +1,5 @@
 #include "FLMRootListController.h"
+#include "WelcomePageController.h"
 
 @implementation FLMRootListController
 
@@ -65,6 +66,49 @@
     ]];
 
     _table.tableHeaderView = self.headerView;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    // Setting up welcome view
+    if (@available(iOS 13.0, *)) {
+        NSString *version = [self packageVersion];
+        NSString *localePath = [NSString stringWithFormat:@"/Library/PreferenceBundles/FLMPrefs.bundle/%@.lproj/Changelog.strings", [[NSLocale currentLocale] languageCode]];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:localePath]) {
+            localePath = @"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings";
+        }
+        NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithContentsOfFile:PLIST_PATH];
+        if (![prefs objectForKey:version]) {
+            NSDictionary *changeDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:localePath isDirectory:NO] error:nil];
+            NSMutableArray *sortedChanges = [NSMutableArray new];
+            for (NSString *key in [[changeDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+                [sortedChanges addObject:changeDict[key]];
+            }
+
+            OBBulletedList *bulletedList = [[OBBulletedList alloc] init];
+            for (int i = 0; i < sortedChanges.count - 2; i += 3) {
+                NSString *icon = nil;
+                NSString *unformattedIcon = [sortedChanges objectAtIndex:i];
+                if ([unformattedIcon isEqualToString:@"new"]) {
+                    icon = @"plus.circle.fill";
+                } else if ([unformattedIcon isEqualToString:@"fix"]) {
+                    icon = @"checkmark.circle.fill";
+                } else if ([unformattedIcon isEqualToString:@"removed"]) {
+                    icon = @"minus.circle";
+                } 
+                NSString *title = [sortedChanges objectAtIndex:i + 1];
+                NSString *content = [sortedChanges objectAtIndex:i + 2];
+                [bulletedList addItemWithTitle:title description:content image:[UIImage systemImageNamed:icon]];
+            }
+
+            OBWelcomeController *welcomeController = [[WelcomePageController alloc] initWelcomeControllerWithLocalizableTitle:@"FASTLPM" subtitle:version itemsList:bulletedList];
+            [self presentViewController:welcomeController animated:YES completion:nil];
+
+            [prefs setObject:@YES forKey:version];
+            [prefs writeToFile:PLIST_PATH atomically:YES];
+        }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
