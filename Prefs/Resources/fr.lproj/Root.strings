@@ -19,7 +19,7 @@
 
     OTHER_TITLE = "Autre";
     RESET_PREFS = "Réinitialiser les options";
-    RESET_CONFIRMATION = "Voulez-vous vraiment réinitialiser les préférences de FastLPM ? Cette action va respring votre appareil.";
+    RESET_CONFIRMATION = "Voulez-vous vraiment réinitialiser les préférences de FastLPM ? Cette action est irréversible.";
     CONFIRM = "Confirmer";
     CANCEL = "Annuler";
 
@@ -34,4 +34,9 @@
     SOURCE_CODE = "💻 Code source";
 
     FOOTER_TEXT = "FastLPM par RedenticDev";
+
+    /* WelcomePageController.m */
+    CONTINUE = "Continuer";
+    THX_FOR_USING = "Merci d'utiliser %@ !";
+    WHATS_NEW = "Nouveautés de la %@";
 }

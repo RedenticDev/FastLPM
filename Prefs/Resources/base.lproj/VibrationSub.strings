@@ -16,6 +16,8 @@
     REPEAT_VIBRATIONS = "Repeat vibrations";
     VIBRATION_REPETITIONS = "Number of repetitions";
     VIBRATION_INTERVAL = "Repetition interval (in seconds)";
+    GROWING_DURATION = "Growing Duration";
+    GROWING_DURATION_EXPL = "This option doubles the repetition interval for each vibration.";
 
     FOOTER_TEXT = "FastLPM by RedenticDev";
 }
