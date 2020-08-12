@@ -82,6 +82,8 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>REPETITION_SETTINGS</string>
+			<key>footerText</key>
+			<string>GROWING_DURATION_EXPL</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -103,13 +105,13 @@
 			<key>cellClass</key>
 			<string>RCLabeledSliderCell</string>
 			<key>default</key>
-			<integer>1</integer>
+			<integer>2</integer>
 			<key>defaults</key>
 			<string>com.redenticdev.fastlpm</string>
 			<key>key</key>
 			<string>vibrationRepetitions</string>
 			<key>min</key>
-			<integer>1</integer>
+			<integer>2</integer>
 			<key>max</key>
 			<integer>5</integer>
 			<key>showValue</key>
@@ -117,7 +119,7 @@
 			<key>isSegmented</key>
 			<true/>
 			<key>segmentCount</key>
-			<integer>4</integer>
+			<integer>3</integer>
 			<key>label</key>
 			<string>VIBRATION_REPETITIONS</string>
 			<key>strings</key>
@@ -148,6 +150,20 @@
 			<string>VIBRATION_INTERVAL</string>
 			<key>strings</key>
 			<string>VibrationSub</string>
+			<key>PostNotification</key>
+			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.redenticdev.fastlpm</string>
+			<key>key</key>
+			<string>growingDuration</string>
+			<key>label</key>
+			<string>GROWING_DURATION</string>
 			<key>PostNotification</key>
 			<string>com.redenticdev.fastlpm/ReloadPrefs</string>
 		</dict>
