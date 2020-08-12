@@ -40,11 +40,8 @@
     return self;
 }
 
--(NSArray *)specifiers {
-	if (_specifiers == nil) {
-		_specifiers = [[self loadSpecifiersFromPlistName:@"Root" target:self] retain];
-	}
-
+- (NSArray *)specifiers {
+	if (!_specifiers) _specifiers = [[self loadSpecifiersFromPlistName:@"Root" target:self] retain];
 	return _specifiers;
 }
 
@@ -169,16 +166,17 @@
 }
 
 - (void)resetPreferences {
-    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.redenticdev.fastlpm.plist" error:nil];
-    [HBRespringController respring];
+    HBPreferences *prefsToReset = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
+    [prefsToReset removeAllObjects];
+    [prefsToReset setBool:YES forKey:[self packageVersion]];
+    [self reloadSpecifiers];
 }
 
 - (void)respring {
 	UIAlertController *respring = [UIAlertController alertControllerWithTitle:localize(@"FASTLPM", @"Root") message:localize(@"RESPRING_PROMPT", @"Root") preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:localize(@"YES_PROMPT", @"Root") style:UIAlertActionStyleDestructive handler:^(UIAlertAction * action) {
+	UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:localize(@"YES_PROMPT", @"Root") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
 		[HBRespringController respring];
 	}];
-
 	UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:localize(@"NO_PROMPT", @"Root") style:UIAlertActionStyleCancel handler:nil];
 
 	[respring addAction:confirmAction];
@@ -190,10 +188,10 @@
 
 @implementation RCLabeledSliderCell // Improved version of kritanta's KRLabeledSliderCell
 
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier specifier:(PSSpecifier*)specifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier specifier:(PSSpecifier*)specifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier]) {
         UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 20)];
-        label.text = localize(specifier.properties[@"label"], (specifier.properties[@"strings"] ? specifier.properties[@"strings"] : @"Root"));
+        label.text = localize(specifier.properties[@"label"], specifier.properties[@"strings"] ? specifier.properties[@"strings"] : @"Root");
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
         [label sizeToFit];
@@ -204,7 +202,7 @@
     return self;
 }
 
--(void)layoutSubviews {
+- (void)layoutSubviews {
     [super layoutSubviews];
     [self.control setFrame:CGRectMake(self.control.frame.origin.x, self.frame.size.height - 45, self.control.frame.size.width, self.control.frame.size.height)];
 }
