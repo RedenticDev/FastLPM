@@ -89,8 +89,8 @@
         if (![[NSFileManager defaultManager] fileExistsAtPath:localePath]) {
             localePath = @"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings";
         }
-        NSMutableDictionary *prefs = [NSMutableDictionary dictionaryWithContentsOfFile:PLIST_PATH];
-        if (![prefs objectForKey:version]) {
+        HBPreferences *prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
+        if (![prefs boolForKey:version]) {
             NSDictionary *changeDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:localePath isDirectory:NO] error:nil];
             NSMutableArray *sortedChanges = [NSMutableArray new];
             for (NSString *key in [[changeDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
@@ -116,8 +116,10 @@
             OBWelcomeController *welcomeController = [[WelcomePageController alloc] initWelcomeControllerWithLocalizableTitle:@"FASTLPM" subtitle:version itemsList:bulletedList];
             [self presentViewController:welcomeController animated:YES completion:nil];
 
-            [prefs setObject:@YES forKey:version];
-            [prefs writeToFile:PLIST_PATH atomically:YES];
+            BOOL versionRegister = NO;
+            [prefs registerBool:&versionRegister default:NO forKey:version];
+            [prefs setBool:YES forKey:version];
+            [prefs synchronize];
         }
     }
 }

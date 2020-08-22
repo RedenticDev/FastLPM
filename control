@@ -2,7 +2,7 @@ Package: com.redenticdev.fastlpm
 Name: FastLPM
 Depends: mobilesubstrate, preferenceloader, firmware (>= 11), ws.hbang.common
 Replaces: com.olxios.quickpowermode
-Version: 1.1.0
+Version: 1.1.1
 Architecture: iphoneos-arm
 Description: Toggle LPM by tapping the battery icon
 Icon: https://redentic.dev/depictions/com.redenticdev.fastlpm/icon.png
