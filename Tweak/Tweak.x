@@ -54,6 +54,7 @@ UIGestureRecognizer* gestureRecognizer;
                 // Initial checks
                 isLegacyDevice = [[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] < 2; // Check for Haptic/Taptic support
                 isForceTouchCap = [[UITraitCollection alloc] init].forceTouchCapability == UIForceTouchCapabilityAvailable;
+                saver = [_CDBatterySaver batterySaver];
             }
             if (shouldBeRemoved) {
                 self.userInteractionEnabled = NO;
@@ -65,18 +66,17 @@ UIGestureRecognizer* gestureRecognizer;
                 shouldBeRemoved = NO;
             }
             if (shouldBeInitialized) {
-                saver = [_CDBatterySaver batterySaver];
                 self.userInteractionEnabled = YES;
                 if ([self gestureRecognizers]) [self removeGestureRecognizer:gestureRecognizer];
                 if ([typeOfGesture isEqualToString:@"taps"]) {
                     gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
-                    ((UITapGestureRecognizer*)gestureRecognizer).numberOfTapsRequired = tapsNumber;
+                    ((UITapGestureRecognizer *)gestureRecognizer).numberOfTapsRequired = tapsNumber;
                 } else if ([typeOfGesture isEqualToString:@"hold"] || ([typeOfGesture isEqualToString:@"3d"] && !isForceTouchCap)) {
                     gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
-                    ((UILongPressGestureRecognizer*)gestureRecognizer).minimumPressDuration = holdDuration;
+                    ((UILongPressGestureRecognizer *)gestureRecognizer).minimumPressDuration = holdDuration;
                 } else if ([typeOfGesture isEqualToString:@"swipe"]) {
                     gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
-                    ((UISwipeGestureRecognizer*)gestureRecognizer).direction = swipeDirection;
+                    ((UISwipeGestureRecognizer *)gestureRecognizer).direction = swipeDirection;
                 } else if ([typeOfGesture isEqualToString:@"3d"] && isForceTouchCap) {
                     gestureRecognizer = [[%c(ForceTouchGestureRecognizer) alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
                 }
