@@ -94,13 +94,13 @@
             NSDictionary *changeDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:localePath isDirectory:NO] error:nil];
             NSMutableArray *sortedChanges = [NSMutableArray new];
             for (NSString *key in [[changeDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
-                [sortedChanges addObject:changeDict[key]];
+                [sortedChanges addObject:[changeDict objectForKey:key]];
             }
 
             OBBulletedList *bulletedList = [[OBBulletedList alloc] init];
             for (int i = 0; i < sortedChanges.count - 2; i += 3) {
                 NSString *icon = nil;
-                NSString *unformattedIcon = [sortedChanges objectAtIndex:i];
+                NSString *unformattedIcon = [[sortedChanges objectAtIndex:i] localizedLowercaseString];
                 if ([unformattedIcon isEqualToString:@"new"]) {
                     icon = @"plus.circle.fill";
                 } else if ([unformattedIcon isEqualToString:@"fix"]) {
@@ -190,9 +190,9 @@
 
 @implementation RCLabeledSliderCell // Improved version of kritanta's KRLabeledSliderCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier specifier:(PSSpecifier*)specifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier specifier:(PSSpecifier *)specifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier specifier:specifier]) {
-        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 20)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 300, 20)];
         label.text = localize(specifier.properties[@"label"], specifier.properties[@"strings"] ? specifier.properties[@"strings"] : @"Root");
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
