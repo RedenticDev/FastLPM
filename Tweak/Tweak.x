@@ -11,13 +11,14 @@
 -(long long)setMode:(long long)arg1;
 @end
 
-HBPreferences* prefs;
+// Prefs
+HBPreferences *prefs;
 BOOL enabled = YES;
 BOOL shouldBeInitialized = NO;
 BOOL shouldBeRemoved = NO;
 BOOL isLegacyDevice;
 BOOL isForceTouchCap;
-NSString* typeOfGesture = @"taps";
+NSString *typeOfGesture = @"taps";
 NSInteger areaEnlargement = 0;
 NSInteger tapsNumber = 1;
 double holdDuration = 0.5;
@@ -32,9 +33,10 @@ NSInteger vibrationRepetitions = 2;
 double vibrationRepetitionInterval = 0.5;
 BOOL growingDuration = NO;
 
-_UIBatteryView* batteryView;
-_CDBatterySaver* saver;
-UIGestureRecognizer* gestureRecognizer;
+// Global variables
+_UIBatteryView *batteryView;
+_CDBatterySaver *saver;
+UIGestureRecognizer *gestureRecognizer;
 
 %hook _UIBatteryView
 
