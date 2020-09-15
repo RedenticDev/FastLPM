@@ -84,39 +84,46 @@
 
     // Setting up welcome view
     if (@available(iOS 13.0, *)) {
-        NSString *version = [self packageVersion];
-        HBPreferences *prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
-        if (![prefs boolForKey:version]) {
-            NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings" isDirectory:NO] error:nil];
-            NSMutableArray *sortedChanges = [NSMutableArray new];
-            for (NSString *key in [[keysDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
-                [sortedChanges addObject:localize(key, @"Changelog")];
+        void *handle = dlopen("/System/Library/PrivateFrameworks/OnBoardingKit.framework/OnBoardingKit", RTLD_LAZY);
+        if (handle) {
+            Class _OBBulletedList = NSClassFromString(@"OBBulletedList");
+
+            NSString *version = [self packageVersion];
+            HBPreferences *prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
+            if (![prefs boolForKey:version]) {
+                NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings" isDirectory:NO] error:nil];
+                NSMutableArray *sortedChanges = [NSMutableArray new];
+                for (NSString *key in [[keysDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+                    [sortedChanges addObject:localize(key, @"Changelog")];
+                }
+
+                id bulletedList = [[_OBBulletedList alloc] init];
+                for (int i = 0; i < sortedChanges.count - 2; i += 3) {
+                    NSString *icon = nil;
+                    NSString *unformattedIcon = [[sortedChanges objectAtIndex:i] localizedLowercaseString];
+                    if ([unformattedIcon isEqualToString:@"new"]) {
+                        icon = @"plus.circle.fill";
+                    } else if ([unformattedIcon isEqualToString:@"fix"]) {
+                        icon = @"checkmark.circle.fill";
+                    } else if ([unformattedIcon isEqualToString:@"removed"]) {
+                        icon = @"minus.circle";
+                    } 
+                    NSString *title = [sortedChanges objectAtIndex:i + 1];
+                    NSString *content = [sortedChanges objectAtIndex:i + 2];
+                    [bulletedList addItemWithTitle:title description:content image:[UIImage systemImageNamed:icon]];
+                }
+
+                id welcomeController = [[NSClassFromString(@"WelcomePageController") alloc] initWelcomeControllerWithLocalizableTitle:@"FASTLPM" subtitle:version itemsList:bulletedList];
+                [self presentViewController:welcomeController animated:YES completion:nil];
+
+                BOOL versionRegister = NO;
+                [prefs registerBool:&versionRegister default:NO forKey:version];
+                [prefs setBool:YES forKey:version];
+                [prefs synchronize];
             }
-
-            OBBulletedList *bulletedList = [[OBBulletedList alloc] init];
-            for (int i = 0; i < sortedChanges.count - 2; i += 3) {
-                NSString *icon = nil;
-                NSString *unformattedIcon = [[sortedChanges objectAtIndex:i] localizedLowercaseString];
-                if ([unformattedIcon isEqualToString:@"new"]) {
-                    icon = @"plus.circle.fill";
-                } else if ([unformattedIcon isEqualToString:@"fix"]) {
-                    icon = @"checkmark.circle.fill";
-                } else if ([unformattedIcon isEqualToString:@"removed"]) {
-                    icon = @"minus.circle";
-                } 
-                NSString *title = [sortedChanges objectAtIndex:i + 1];
-                NSString *content = [sortedChanges objectAtIndex:i + 2];
-                [bulletedList addItemWithTitle:title description:content image:[UIImage systemImageNamed:icon]];
-            }
-
-            OBWelcomeController *welcomeController = [[WelcomePageController alloc] initWelcomeControllerWithLocalizableTitle:@"FASTLPM" subtitle:version itemsList:bulletedList];
-            [self presentViewController:welcomeController animated:YES completion:nil];
-
-            BOOL versionRegister = NO;
-            [prefs registerBool:&versionRegister default:NO forKey:version];
-            [prefs setBool:YES forKey:version];
-            [prefs synchronize];
+            dlclose(handle);
         }
+    } else { // iOS 11/12 -> Custom Welcome Page?
     }
 }
 

@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#include <dlfcn.h>
 
 #define localize(a, b) NSLocalizedStringWithDefaultValue(a, b, [NSBundle bundleWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle"], nil, nil)
 
