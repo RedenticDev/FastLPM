@@ -85,16 +85,12 @@
     // Setting up welcome view
     if (@available(iOS 13.0, *)) {
         NSString *version = [self packageVersion];
-        NSString *localePath = [NSString stringWithFormat:@"/Library/PreferenceBundles/FLMPrefs.bundle/%@.lproj/Changelog.strings", [[NSLocale currentLocale] languageCode]];
-        if (![[NSFileManager defaultManager] fileExistsAtPath:localePath]) {
-            localePath = @"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings";
-        }
         HBPreferences *prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
         if (![prefs boolForKey:version]) {
-            NSDictionary *changeDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:localePath isDirectory:NO] error:nil];
+            NSDictionary *keysDict = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle/base.lproj/Changelog.strings" isDirectory:NO] error:nil];
             NSMutableArray *sortedChanges = [NSMutableArray new];
-            for (NSString *key in [[changeDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
-                [sortedChanges addObject:[changeDict objectForKey:key]];
+            for (NSString *key in [[keysDict allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+                [sortedChanges addObject:localize(key, @"Changelog")];
             }
 
             OBBulletedList *bulletedList = [[OBBulletedList alloc] init];

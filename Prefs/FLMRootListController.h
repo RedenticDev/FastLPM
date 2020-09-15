@@ -7,7 +7,6 @@
 #import <Cephei/HBRespringController.h>
 #include <stdio.h>
 
-#define localize(a, b) NSLocalizedStringWithDefaultValue(a, b, [NSBundle bundleWithPath:@"/Library/PreferenceBundles/FLMPrefs.bundle"], nil, nil)
 #define PLIST_PATH @"/var/mobile/Library/Preferences/com.redenticdev.fastlpm.plist"
 
 @interface RCLabeledSliderCell : PSSliderTableCell
