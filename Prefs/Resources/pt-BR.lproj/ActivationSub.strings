@@ -1,0 +1,25 @@
+{
+    ACTIVATION = "Ativação";
+    ACTIVATION_OPTIONS = "Opções de Ativação";
+    3D_TOUCH_WARNING = "'3D Touch' será substituído por pressionar se seu aparelho não suportar essa função.";
+    AREA_ENLARGEMENT = "Aumento da área de ativação (em px)";
+    ENLARGEMENT_INFO = "Aplicado somente na área da barra de status.";
+
+    TAPS = "Toque";
+    HOLD = "Segure";
+    SWIPE = "Arraste";
+    3D_TOUCH = "3D Touch";
+
+    NUMBER_OF_TAPS = "Número de toques";
+    HOLDING_TIME = "Tempo pressionado (em segundos)";
+
+    DIRECTION = "Direção do arrasto";
+    LEFT = "Esquerda";
+    RIGHT = "Direita";
+    UP = "Cima";
+    DOWN = "Baixo";
+
+    RESPRING_INFO = "Um respring é necessário para esta página.";
+
+    FOOTER_TEXT = "FastLPM por RedenticDev";
+}

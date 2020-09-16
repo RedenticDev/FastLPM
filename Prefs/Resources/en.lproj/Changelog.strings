@@ -2,5 +2,5 @@
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
     CHANGE_1_A_ICON = "fix";
     CHANGE_1_B_TITLE = "Settings pane";
-    CHANGE_1_C_CONTENT = "Fixed this page being able to reappear more than once";
+    CHANGE_1_C_CONTENT = "Fixed preferences not loading on iOS 11 & 12";
 }

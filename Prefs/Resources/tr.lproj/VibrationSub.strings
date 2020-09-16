@@ -1,0 +1,23 @@
+{
+    VIBRATION = "Titreşim Ayarları";
+
+    VIBRATIONS_7_AND_NEWER = "Titreşim Gücü (iPhone 7 ve daha yeni modeller)";
+    LIGHT = "Yumuşak";
+    MEDIUM = "Orta";
+    HEAVY = "Ağır";
+    SOFT = "Hafif";
+    RIGID = "Sert";
+    IOS_13_INFOS = "'Hafif' ve 'Sert' seçenekleri sadece iOS 13 veya daha yeni bir sürümde kullanılabilir.";
+
+    VIBRATIONS_6S_AND_LESS = "Titreşim Gücü (iPhone 6S ve daha eski modeller)";
+    STRONG = "Güçlü";
+    
+    REPETITION_SETTINGS = "Tekrarlama Ayarları";
+    REPEAT_VIBRATIONS = "Titreşimleri tekrar et";
+    VIBRATION_REPETITIONS = "Tekrarlama sayısı";
+    VIBRATION_INTERVAL = "Tekrarlama aralığı (saniye olarak)";
+    GROWING_DURATION = "Artma süresi";
+    GROWING_DURATION_EXPL = "Bu seçenek, her bir titreme için tekrarlama aralığını iki katına çıkarır.";
+
+    FOOTER_TEXT = "FastLPM, RedenticDev'den";
+}

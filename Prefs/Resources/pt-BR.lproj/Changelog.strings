@@ -1,6 +1,6 @@
 {
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
     CHANGE_1_A_ICON = "fix";
-    CHANGE_1_B_TITLE = "Options";
-    CHANGE_1_C_CONTENT = "Résolution d'un problème empêchant les options de charger en iOS 11 & 12";
+    CHANGE_1_B_TITLE = "Painel de configurações";
+    CHANGE_1_C_CONTENT = "Corrigi preferências não carregando no iOS 11 & 12";
 }

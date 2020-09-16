@@ -1,0 +1,6 @@
+{
+    FASTLPM = "FastLPM";
+
+    TESTERS = "Test edenler";
+    TRANSLATORS = "Çevirenler";
+}

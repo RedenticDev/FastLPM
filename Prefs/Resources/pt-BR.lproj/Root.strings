@@ -1,0 +1,42 @@
+{
+    FASTLPM = "FastLPM";
+
+    RESPRING = "Respring";
+    RESPRING_PROMPT = "Você realmente quer faer um respring em seu aparelho?";
+    YES_PROMPT = "Sim";
+    NO_PROMPT = "Não";
+
+    ENABLED = "Habilitar";
+    RESPRING_INFO = "Respring é requerido para a chave Habilitar.";
+
+    ACTIVATION_SETTINGS = "Configurações de Ativação";
+    ACTIVATION = "Ativação";
+    NEEDS_RESPRING = "Respring é requerido para a seção Ativação";
+
+    VIBRATION_ACTIVATION = "Ativação de Vibração";
+    VIBRATIONS_ENABLED = "Vibrações";
+    VIBRATION_SETTINGS = "Configurações de Vibração";
+
+    OTHER_TITLE = "Outros";
+    RESET_PREFS = "Restaurar Preferências";
+    RESET_CONFIRMATION = "Você realmente quer restaurar as preferências do FastLPM? Esta ação é irreversível.";
+    CONFIRM = "Confirmar";
+    CANCEL = "Cancelar";
+
+    CONTRIBUTORS = "Contribuíntes";
+    CONTRIBUTE_TO_TRANSLATIONS = "📖 Contribua com as traduções!";
+
+    SUPPORT_TITLE = "Suporte";
+    BUY_ME_A_COFFEE = "☕️ Me pague um café";
+    FEATURE_REQUEST = "💡 Pedido de melhoria?";
+    MAIL = "Mail";
+    FOUND_A_BUG = "🐞 Encontrou um erro?";
+    SOURCE_CODE = "💻 Código Fonte";
+
+    FOOTER_TEXT = "FastLPM por RedenticDev";
+
+    /* WelcomePageController.m */
+    CONTINUE = "Continue";
+    THX_FOR_USING = "Obrigado por usar %@!";
+    WHATS_NEW = "O que há de novo em %@?";
+}

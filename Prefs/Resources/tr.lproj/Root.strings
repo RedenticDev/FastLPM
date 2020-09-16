@@ -1,0 +1,42 @@
+{
+    FASTLPM = "FastLPM";
+
+    RESPRING = "Respring";
+    RESPRING_PROMPT = "Respring yapmak istediğinizden emin misiniz?";
+    YES_PROMPT = "Evet";
+    NO_PROMPT = "Hayır";
+
+    ENABLED = "Aktif et";
+    RESPRING_INFO = "Seçeneği aktifleştirmek için respring gerekli.";
+
+    ACTIVATION_SETTINGS = "Etkinleştirme Ayarları";
+    ACTIVATION = "Etkinleştirme";
+    NEEDS_RESPRING = "Etkinleştirme bölümü için respring gerekli.";
+
+    VIBRATION_ACTIVATION = "Titreşim Etkinleştirme";
+    VIBRATIONS_ENABLED = "Titreşimler";
+    VIBRATION_SETTINGS = "Titreşim Ayarları";
+
+    OTHER_TITLE = "Diğer";
+    RESET_PREFS = "Tweak Ayarlarını Sıfırla";
+    RESET_CONFIRMATION = "FastLPM ayarlarını sıfırlamak istediğinizden emin misiniz? Bu işlem geri alınamaz.";
+    CONFIRM = "Onayla";
+    CANCEL = "İptal";
+
+    CONTRIBUTORS = "Katkıda Bulunanlar";
+    CONTRIBUTE_TO_TRANSLATIONS = "📖 Çevirilere katkıda bulun!";
+
+    SUPPORT_TITLE = "Destek";
+    BUY_ME_A_COFFEE = "☕️ Bana bir bardak kahve alın :)";
+    FEATURE_REQUEST = "💡 İstediğiniz bir özellik mi var?";
+    MAIL = "E-posta";
+    FOUND_A_BUG = "🐞 Bir hata mı buldunuz?";
+    SOURCE_CODE = "💻 Kaynak Kodu";
+
+    FOOTER_TEXT = "FastLPM, RedenticDev'den";
+
+    /* WelcomePageController.m */
+    CONTINUE = "Devam et";
+    THX_FOR_USING = "%@'i kullandığınız için teşekkürler!";
+    WHATS_NEW = "%@'de neler yeni?";
+}

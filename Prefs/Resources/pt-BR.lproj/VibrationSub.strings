@@ -1,0 +1,23 @@
+{
+    VIBRATION = "Configurações de Vibração";
+
+    VIBRATIONS_7_AND_NEWER = "Força das Vibrações (iPhone 7 & novos)";
+    LIGHT = "Fraca";
+    MEDIUM = "Média";
+    HEAVY = "Forte";
+    SOFT = "Suave";
+    RIGID = "Rígida";
+    IOS_13_INFOS = "'Suave' & 'Rígida' estão disponíveis apenas no iOS 13+.";
+
+    VIBRATIONS_6S_AND_LESS = "Força das Vibrações (iPhone 6S & antigos)";
+    STRONG = "Forte";
+    
+    REPETITION_SETTINGS = "Configurações de Repetição";
+    REPEAT_VIBRATIONS = "Repetir vibrações";
+    VIBRATION_REPETITIONS = "Número de repetições";
+    VIBRATION_INTERVAL = "Intervao de repetições (em segundos)";
+    GROWING_DURATION = "Duração do Crescimento";
+    GROWING_DURATION_EXPL = "Esta opção dobra o intervalo de repetição para cada vibração.";
+
+    FOOTER_TEXT = "FastLPM por RedenticDev";
+}

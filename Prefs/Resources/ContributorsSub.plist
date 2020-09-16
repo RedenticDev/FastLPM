@@ -4,9 +4,25 @@
 <dict>
 	<key>items</key>
     <array>
+				
+		<!-- Testers -->
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>TESTERS</string>
+		</dict>
+		<dict>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>Pingu Jail</string>
+            <key>user</key>
+            <string>PinguJail</string>
+		</dict>
 
 		<!-- Translators -->
-		<!--<dict>
+		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
@@ -16,16 +32,30 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Français</string>
+			<string>Türkçe</string>
 		</dict>
 		<dict>
             <key>cellClass</key>
             <string>HBTwitterCell</string>
             <key>label</key>
-            <string></string>
+            <string>Türkay</string>
             <key>user</key>
-            <string></string>
-        </dict>-->
+            <string>turkaylg15</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Português (Brasileiro)</string>
+		</dict>
+		<dict>
+            <key>cellClass</key>
+            <string>HBTwitterCell</string>
+            <key>label</key>
+            <string>peitx0</string>
+            <key>user</key>
+            <string>fckpepo</string>
+		</dict>
 
     </array>
 	<key>title</key>

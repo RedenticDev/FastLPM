@@ -1,0 +1,25 @@
+{
+    ACTIVATION = "Etkinleştirme";
+    ACTIVATION_OPTIONS = "Etkinleştirme Seçenekleri";
+    3D_TOUCH_WARNING = "Eğer cihazınız desteklemiyorsa, '3D Touch' yerine uzun basma kullanılacak.";
+    AREA_ENLARGEMENT = "Etkinleştirme alanını büyütme (px (pixel) olarak)";
+    ENLARGEMENT_INFO = "Sadece durum çubuğu kısmına uygulanır.";
+
+    TAPS = "Dokun";
+    HOLD = "Basılı Tut";
+    SWIPE = "Kaydır";
+    3D_TOUCH = "3D Touch";
+
+    NUMBER_OF_TAPS = "Dokunma Sayısı";
+    HOLDING_TIME = "Dokunma Süresi (saniye olarak)";
+
+    DIRECTION = "Kaydırma yönü";
+    LEFT = "Sol";
+    RIGHT = "Sağ";
+    UP = "Yukarı";
+    DOWN = "Aşağı";
+
+    RESPRING_INFO = "Bu sayfa için respring yapılması gerekli.";
+
+    FOOTER_TEXT = "FastLPM, RedenticDev'den";
+}
