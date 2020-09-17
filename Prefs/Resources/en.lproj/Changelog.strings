@@ -1,6 +1,10 @@
 {
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
-    CHANGE_1_A_ICON = "fix";
-    CHANGE_1_B_TITLE = "Settings pane";
-    CHANGE_1_C_CONTENT = "Fixed preferences not loading on iOS 11 & 12";
+    CHANGE_1_A_ICON = "new";
+    CHANGE_1_B_TITLE = "Locales";
+    CHANGE_1_C_CONTENT = "Added Turkish and Portuguese (Brazilian) locales";
+
+    CHANGE_2_A_ICON = "fix";
+    CHANGE_2_B_TITLE = "Settings pane";
+    CHANGE_2_C_CONTENT = "Fixed preferences not loading on iOS 11 & 12";
 }

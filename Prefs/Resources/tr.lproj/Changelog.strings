@@ -1,6 +1,10 @@
 {
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
-    CHANGE_1_A_ICON = "fix";
-    CHANGE_1_B_TITLE = "Ayarlar bölümü";
-    CHANGE_1_C_CONTENT = "iOS 11 ve 12'de tercihlerin yüklenmemesi düzeltildi";
+    CHANGE_1_A_ICON = "new";
+    CHANGE_1_B_TITLE = "Yerel diller";
+    CHANGE_1_C_CONTENT = "Türkçe ve Portekizce (Brezilya) dilleri eklendi";
+
+    CHANGE_2_A_ICON = "fix";
+    CHANGE_2_B_TITLE = "Ayarlar bölümü";
+    CHANGE_2_C_CONTENT = "iOS 11 ve 12'de tercihlerin yüklenmemesi düzeltildi";
 }

@@ -1,6 +1,10 @@
 {
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
-    CHANGE_1_A_ICON = "fix";
-    CHANGE_1_B_TITLE = "Painel de configurações";
-    CHANGE_1_C_CONTENT = "Corrigi preferências não carregando no iOS 11 & 12";
+    CHANGE_1_A_ICON = "new";
+    CHANGE_1_B_TITLE = "Localidades";
+    CHANGE_1_C_CONTENT = "Localidades ‘Turquia’ e ‘Português (Brasileiro)’ adicionadas";
+
+    CHANGE_2_A_ICON = "fix";
+    CHANGE_2_B_TITLE = "Painel de configurações";
+    CHANGE_2_C_CONTENT = "Corrigi preferências não carregando no iOS 11 & 12";
 }
