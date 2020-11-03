@@ -1,6 +1,8 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioServices.h>
-#import <Cephei/HBPreferences.h>
+#ifndef SIMULATOR
+    #import <Cephei/HBPreferences.h>
+#endif
 
 @interface _UIBatteryView : UIView
 @end
@@ -12,10 +14,12 @@
 @end
 
 // Prefs
-HBPreferences *prefs;
+#ifndef SIMULATOR
+    HBPreferences *prefs;
+#endif
 BOOL enabled = YES;
-BOOL shouldBeInitialized = NO;
-BOOL shouldBeRemoved = NO;
+BOOL shouldBeInitialized;
+BOOL shouldBeRemoved;
 BOOL isLegacyDevice;
 BOOL isForceTouchCap;
 NSString *typeOfGesture = @"taps";
@@ -28,10 +32,10 @@ BOOL vibrationEnabled = YES;
 NSInteger hapticStyleValue = 1;
 UIImpactFeedbackStyle hapticStyle = UIImpactFeedbackStyleMedium;
 NSInteger legacyFeedbackValue = 1519;
-BOOL repeatVibrations = NO;
+BOOL repeatVibrations;
 NSInteger vibrationRepetitions = 2;
 double vibrationRepetitionInterval = 0.5;
-BOOL growingDuration = NO;
+BOOL growingDuration;
 
 // Global variables
 _UIBatteryView *batteryView;
@@ -129,34 +133,36 @@ UIGestureRecognizer *gestureRecognizer;
 %end
 
 static void fastlpm_reloadPrefs() {
-    enabled = [prefs boolForKey:@"enabled"];
-    typeOfGesture = [prefs objectForKey:@"typeOfGesture"];
-    areaEnlargement = [prefs integerForKey:@"areaEnlargement"];
-    tapsNumber = [prefs integerForKey:@"numberOfTaps"];
-    holdDuration = [prefs doubleForKey:@"holdDuration"];
-    vibrationEnabled = [prefs boolForKey:@"vibrationEnabled"];
-    legacyFeedbackValue = [prefs integerForKey:@"oldVibrationStrength"];
-    hapticStyleValue = [prefs integerForKey:@"newVibrationStrength"];
-    switch (hapticStyleValue) {
-        case 0: { hapticStyle = UIImpactFeedbackStyleLight; } break;
-        case 1: { hapticStyle = UIImpactFeedbackStyleMedium; } break;
-        case 2: { hapticStyle = UIImpactFeedbackStyleHeavy; } break;
-        case 3: { hapticStyle = UIImpactFeedbackStyleSoft; } break;
-        case 4: { hapticStyle = UIImpactFeedbackStyleRigid; } break;
-        default: {} break;
-    }
-    swipeDirectionValue = [prefs integerForKey:@"swipeDirectionValue"];
-    switch (swipeDirectionValue) {
-        case 0: { swipeDirection = UISwipeGestureRecognizerDirectionLeft; } break;
-        case 1: { swipeDirection = UISwipeGestureRecognizerDirectionRight; } break;
-        case 2: { swipeDirection = UISwipeGestureRecognizerDirectionUp; } break;
-        case 3: { swipeDirection = UISwipeGestureRecognizerDirectionDown; } break;
-        default: {} break;
-    }
-    repeatVibrations = [prefs boolForKey:@"repeatVibrations"];
-    vibrationRepetitions = [prefs integerForKey:@"vibrationRepetitions"];
-    vibrationRepetitionInterval = [prefs doubleForKey:@"vibrationInterval"];
-    growingDuration = [prefs boolForKey:@"growingDuration"];
+    #ifndef SIMULATOR
+        enabled = [prefs boolForKey:@"enabled"];
+        typeOfGesture = [prefs objectForKey:@"typeOfGesture"];
+        areaEnlargement = [prefs integerForKey:@"areaEnlargement"];
+        tapsNumber = [prefs integerForKey:@"numberOfTaps"];
+        holdDuration = [prefs doubleForKey:@"holdDuration"];
+        vibrationEnabled = [prefs boolForKey:@"vibrationEnabled"];
+        legacyFeedbackValue = [prefs integerForKey:@"oldVibrationStrength"];
+        hapticStyleValue = [prefs integerForKey:@"newVibrationStrength"];
+        switch (hapticStyleValue) {
+            case 0: { hapticStyle = UIImpactFeedbackStyleLight; } break;
+            case 1: { hapticStyle = UIImpactFeedbackStyleMedium; } break;
+            case 2: { hapticStyle = UIImpactFeedbackStyleHeavy; } break;
+            case 3: { if (@available(iOS 13.0, *)) hapticStyle = UIImpactFeedbackStyleSoft; } break;
+            case 4: { if (@available(iOS 13.0, *)) hapticStyle = UIImpactFeedbackStyleRigid; } break;
+            default: {} break;
+        }
+        swipeDirectionValue = [prefs integerForKey:@"swipeDirectionValue"];
+        switch (swipeDirectionValue) {
+            case 0: { swipeDirection = UISwipeGestureRecognizerDirectionLeft; } break;
+            case 1: { swipeDirection = UISwipeGestureRecognizerDirectionRight; } break;
+            case 2: { swipeDirection = UISwipeGestureRecognizerDirectionUp; } break;
+            case 3: { swipeDirection = UISwipeGestureRecognizerDirectionDown; } break;
+            default: {} break;
+        }
+        repeatVibrations = [prefs boolForKey:@"repeatVibrations"];
+        vibrationRepetitions = [prefs integerForKey:@"vibrationRepetitions"];
+        vibrationRepetitionInterval = [prefs doubleForKey:@"vibrationInterval"];
+        growingDuration = [prefs boolForKey:@"growingDuration"];
+    #endif
 
     shouldBeRemoved = YES;
     if (enabled) shouldBeInitialized = YES;
@@ -165,20 +171,22 @@ static void fastlpm_reloadPrefs() {
 }
 
 %ctor {
-    prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
-    [prefs registerBool:&enabled default:YES forKey:@"enabled"];
-    [prefs registerObject:&typeOfGesture default:@"taps" forKey:@"typeOfGesture"];
-    [prefs registerInteger:&areaEnlargement default:0 forKey:@"areaEnlargement"];
-    [prefs registerInteger:&tapsNumber default:1 forKey:@"numberOfTaps"];
-    [prefs registerDouble:&holdDuration default:0.5 forKey:@"holdDuration"];
-    [prefs registerInteger:&swipeDirectionValue default:0 forKey:@"swipeDirectionValue"];
-    [prefs registerBool:&vibrationEnabled default:YES forKey:@"vibrationEnabled"];
-    [prefs registerInteger:&legacyFeedbackValue default:1519 forKey:@"oldVibrationStrength"];
-    [prefs registerInteger:&hapticStyleValue default:1 forKey:@"newVibrationStrength"];
-    [prefs registerBool:&repeatVibrations default:NO forKey:@"repeatVibrations"];
-    [prefs registerInteger:&vibrationRepetitions default:2 forKey:@"vibrationRepetitions"];
-    [prefs registerDouble:&vibrationRepetitionInterval default:0.5 forKey:@"vibrationInterval"];
-    [prefs registerBool:&growingDuration default:NO forKey:@"growingDuration"];
+    #ifndef SIMULATOR
+        prefs = [[HBPreferences alloc] initWithIdentifier:@"com.redenticdev.fastlpm"];
+        [prefs registerBool:&enabled default:YES forKey:@"enabled"];
+        [prefs registerObject:&typeOfGesture default:@"taps" forKey:@"typeOfGesture"];
+        [prefs registerInteger:&areaEnlargement default:0 forKey:@"areaEnlargement"];
+        [prefs registerInteger:&tapsNumber default:1 forKey:@"numberOfTaps"];
+        [prefs registerDouble:&holdDuration default:0.5 forKey:@"holdDuration"];
+        [prefs registerInteger:&swipeDirectionValue default:0 forKey:@"swipeDirectionValue"];
+        [prefs registerBool:&vibrationEnabled default:YES forKey:@"vibrationEnabled"];
+        [prefs registerInteger:&legacyFeedbackValue default:1519 forKey:@"oldVibrationStrength"];
+        [prefs registerInteger:&hapticStyleValue default:1 forKey:@"newVibrationStrength"];
+        [prefs registerBool:&repeatVibrations default:NO forKey:@"repeatVibrations"];
+        [prefs registerInteger:&vibrationRepetitions default:2 forKey:@"vibrationRepetitions"];
+        [prefs registerDouble:&vibrationRepetitionInterval default:0.5 forKey:@"vibrationInterval"];
+        [prefs registerBool:&growingDuration default:NO forKey:@"growingDuration"];
+    #endif
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     

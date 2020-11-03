@@ -2,16 +2,16 @@
 
 @implementation FLMAppearanceSettings
 
--(UIColor *)tableViewCellSeparatorColor {
+- (UIColor *)tableViewCellSeparatorColor {
     return [UIColor colorWithWhite:0 alpha:0];
 }
 
--(BOOL)translucentNavigationBar {
+- (BOOL)translucentNavigationBar {
     return NO;
 }
 
--(NSUInteger)largeTitleStyle {
-    return 2;
+- (HBAppearanceSettingsLargeTitleStyle)largeTitleStyle {
+    return HBAppearanceSettingsLargeTitleStyleNever;
 }
 
 @end
