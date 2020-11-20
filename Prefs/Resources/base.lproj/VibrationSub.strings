@@ -9,7 +9,7 @@
     RIGID = "Rigid";
     IOS_13_INFOS = "'Soft' & 'Rigid' are only available in iOS 13+.";
 
-    VIBRATIONS_6S_AND_LESS = "Vibrations Strength (iPhone 6S & older)";
+    VIBRATIONS_6S_PLUS = "Vibrations Strength (iPhone 6S & 6S Plus)";
     STRONG = "Strong";
     
     REPETITION_SETTINGS = "Repetition Settings";

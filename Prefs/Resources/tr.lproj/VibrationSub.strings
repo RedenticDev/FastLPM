@@ -9,7 +9,7 @@
     RIGID = "Sert";
     IOS_13_INFOS = "'Hafif' ve 'Sert' seçenekleri sadece iOS 13 veya daha yeni bir sürümde kullanılabilir.";
 
-    VIBRATIONS_6S_AND_LESS = "Titreşim Gücü (iPhone 6S ve daha eski modeller)";
+    VIBRATIONS_6S_PLUS = "Titreşim Gücü (iPhone 6S ve 6S Plus)";
     STRONG = "Güçlü";
     
     REPETITION_SETTINGS = "Tekrarlama Ayarları";

@@ -4,9 +4,6 @@
     #import <Cephei/HBPreferences.h>
 #endif
 
-@interface _UIBatteryView : UIView
-@end
-
 @interface _CDBatterySaver : NSObject
 +(id)batterySaver;
 -(long long)getPowerMode;
@@ -18,6 +15,7 @@
     HBPreferences *prefs;
 #endif
 BOOL enabled = YES;
+BOOL shouldbeInjected = YES;
 BOOL shouldBeInitialized;
 BOOL shouldBeRemoved;
 BOOL isLegacyDevice;
@@ -38,11 +36,12 @@ double vibrationRepetitionInterval = 0.5;
 BOOL growingDuration;
 
 // Global variables
-_UIBatteryView *batteryView;
+Class foregroundViewClass;
+UIView *batteryView;
 _CDBatterySaver *saver;
 UIGestureRecognizer *gestureRecognizer;
 
-%hook _UIBatteryView
+%hook batteryViewClass
 
     -(id)initWithFrame:(CGRect)arg1 {
         id _view = %orig;
@@ -54,76 +53,78 @@ UIGestureRecognizer *gestureRecognizer;
 
     -(void)layoutSubviews {
         %orig;
-        if ([self.superview isKindOfClass:%c(_UIStatusBarForegroundView)]) {
+        shouldbeInjected = ((UIView *)self).frame.origin.x > [UIScreen mainScreen].bounds.size.width / 2;
+        if (shouldbeInjected && [((UIView *)self).superview isKindOfClass:foregroundViewClass]) {
             if (!batteryView) {
                 batteryView = self;
                 // Initial checks
                 isLegacyDevice = [[[UIDevice currentDevice] valueForKey:@"_feedbackSupportLevel"] integerValue] < 2; // Check for Haptic/Taptic support
-                isForceTouchCap = [[UITraitCollection alloc] init].forceTouchCapability == UIForceTouchCapabilityAvailable;
+                isForceTouchCap = [UITraitCollection new].forceTouchCapability == UIForceTouchCapabilityAvailable;
                 saver = [_CDBatterySaver batterySaver];
             }
             if (shouldBeRemoved) {
-                self.userInteractionEnabled = NO;
-                if (self.gestureRecognizers) {
-                    for (UIGestureRecognizer *gesture in self.gestureRecognizers) {
-                        [self removeGestureRecognizer:gesture];
+                ((UIView *)self).userInteractionEnabled = NO;
+                if (((UIView *)self).gestureRecognizers) {
+                    for (UIGestureRecognizer *gesture in ((UIView *)self).gestureRecognizers) {
+                        [((UIView *)self) removeGestureRecognizer:gesture];
                     }
                 }
                 shouldBeRemoved = NO;
             }
             if (shouldBeInitialized) {
-                self.userInteractionEnabled = YES;
-                if ([self gestureRecognizers]) [self removeGestureRecognizer:gestureRecognizer];
+                ((UIView *)self).userInteractionEnabled = YES;
                 if ([typeOfGesture isEqualToString:@"taps"]) {
-                    gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
+                    gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:((UIView *)self) action:@selector(fastlpm_batteryTapped:)];
                     ((UITapGestureRecognizer *)gestureRecognizer).numberOfTapsRequired = tapsNumber;
                 } else if ([typeOfGesture isEqualToString:@"hold"] || ([typeOfGesture isEqualToString:@"3d"] && !isForceTouchCap)) {
-                    gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
+                    gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:((UIView *)self) action:@selector(fastlpm_batteryTapped:)];
                     ((UILongPressGestureRecognizer *)gestureRecognizer).minimumPressDuration = holdDuration;
                 } else if ([typeOfGesture isEqualToString:@"swipe"]) {
-                    gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
+                    gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:((UIView *)self) action:@selector(fastlpm_batteryTapped:)];
                     ((UISwipeGestureRecognizer *)gestureRecognizer).direction = swipeDirection;
                 } else if ([typeOfGesture isEqualToString:@"3d"] && isForceTouchCap) {
-                    gestureRecognizer = [[%c(ForceTouchGestureRecognizer) alloc] initWithTarget:self action:@selector(fastlpm_batteryTapped:)];
+                    gestureRecognizer = [[%c(ForceTouchGestureRecognizer) alloc] initWithTarget:((UIView *)self) action:@selector(fastlpm_batteryTapped:)];
                 }
-                if (gestureRecognizer) [self addGestureRecognizer:gestureRecognizer];
+                if (gestureRecognizer) [((UIView *)self) addGestureRecognizer:gestureRecognizer];
                 shouldBeInitialized = NO;
             }
         }
     }
 
-    -(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
-        return CGRectContainsPoint(CGRectInset(self.bounds, -areaEnlargement, -areaEnlargement), point) ? self : nil;
+    -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+        return CGRectContainsPoint(CGRectInset(((UIView *)self).bounds, -areaEnlargement, -areaEnlargement), point) && shouldbeInjected ? self : nil;
     }
 
     %new
     -(void)fastlpm_batteryTapped:(id)sender {
-        [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
-        if (vibrationEnabled) {
-            if (!isLegacyDevice) {
-                [[[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle] impactOccurred];
-                if (repeatVibrations) {
-                    double tempInterval = vibrationRepetitionInterval;
-                    for (int i = 0; i < vibrationRepetitions - 1; i++) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                            [[[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle] impactOccurred];
-                        });
-                        growingDuration ? (tempInterval *= 2) : (tempInterval += vibrationRepetitionInterval);
-                    }
-                }
-            } else {
-                AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
-                    AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
-                });
-                if (repeatVibrations) {
-                    double tempInterval = vibrationRepetitionInterval;
-                    for (int i = 0; i < vibrationRepetitions - 1; i++) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                            AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
-                                AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
+        if (shouldbeInjected) {
+            [saver setMode:([saver getPowerMode] == 1) ? 0 : 1];
+            if (vibrationEnabled) {
+                if (!isLegacyDevice) {
+                    [[[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle] impactOccurred];
+                    if (repeatVibrations) {
+                        double tempInterval = vibrationRepetitionInterval;
+                        for (int i = 0; i < vibrationRepetitions - 1; i++) {
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                                [[[UIImpactFeedbackGenerator alloc] initWithStyle:hapticStyle] impactOccurred];
                             });
-                        });
-                        growingDuration ? (tempInterval *= 2) : (tempInterval += vibrationRepetitionInterval);
+                            growingDuration ? (tempInterval *= 2) : (tempInterval += vibrationRepetitionInterval);
+                        }
+                    }
+                } else {
+                    AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
+                        AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
+                    });
+                    if (repeatVibrations) {
+                        double tempInterval = vibrationRepetitionInterval;
+                        for (int i = 0; i < vibrationRepetitions - 1; i++) {
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, tempInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                                AudioServicesPlaySystemSoundWithCompletion(legacyFeedbackValue, ^{
+                                    AudioServicesDisposeSystemSoundID(legacyFeedbackValue);
+                                });
+                            });
+                            growingDuration ? (tempInterval *= 2) : (tempInterval += vibrationRepetitionInterval);
+                        }
                     }
                 }
             }
@@ -190,5 +191,8 @@ static void fastlpm_reloadPrefs() {
 
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)fastlpm_reloadPrefs, CFSTR("com.redenticdev.fastlpm/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
     
-    %init;
+    
+    foregroundViewClass = kCFCoreFoundationVersionNumber > 1600 ? %c(_UIStatusBarForegroundView) : %c(UIStatusBarForegroundView);
+
+    %init(batteryViewClass = kCFCoreFoundationVersionNumber > 1600 ? objc_getClass("_UIBatteryView") : objc_getClass("UIStatusBarBatteryItemView"));
 } 

@@ -9,7 +9,7 @@
     RIGID = "Rigide";
     IOS_13_INFOS = "'Doux' & 'Rigide' sont disponibles uniquement en iOS 13+.";
 
-    VIBRATIONS_6S_AND_LESS = "Type de vibrations (iPhone 6S & plus vieux)";
+    VIBRATIONS_6S_PLUS = "Type de vibrations (iPhone 6S & 6S Plus)";
     STRONG = "Puissant";
     
     REPETITION_SETTINGS = "Options de répétition";

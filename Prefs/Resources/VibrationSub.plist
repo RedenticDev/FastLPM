@@ -48,7 +48,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>VIBRATIONS_6S_AND_LESS</string>
+			<string>VIBRATIONS_6S_PLUS</string>
 		</dict>
 		<dict>
 			<key>cell</key>
