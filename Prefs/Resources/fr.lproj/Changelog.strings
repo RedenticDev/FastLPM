@@ -2,5 +2,5 @@
     /* Follow the keys syntax for each change. Icons possible values: 'new', 'fix', 'removed' (do not localize). */
     CHANGE_1_A_ICON = "fix";
     CHANGE_1_B_TITLE = "Correction de bug";
-    CHANGE_1_C_CONTENT = "Résolution d'un bug entraînant un Safe Mode en iOS 11 & 12.";
+    CHANGE_1_C_CONTENT = "Correction du support pour iOS 11 & 12.";
 }
